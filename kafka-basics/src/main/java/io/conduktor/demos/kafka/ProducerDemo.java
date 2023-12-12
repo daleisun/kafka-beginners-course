@@ -14,7 +14,7 @@ public class ProducerDemo {
 
     public static void main(String[] args) {
 
-        LOG.info("Hello World!");
+        LOG.info("I am a producer!");
 
         // Create Producer Properties
         Properties properties = new Properties();
