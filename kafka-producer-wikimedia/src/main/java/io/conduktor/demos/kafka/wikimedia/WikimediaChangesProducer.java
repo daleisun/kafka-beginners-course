@@ -25,6 +25,11 @@ public class WikimediaChangesProducer {
     	properties.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
     	properties.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
     	
+		// Set safe producer config (kafka <= 2.8)
+		properties.setProperty(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, "true");
+		properties.setProperty(ProducerConfig.ACKS_CONFIG, "all");
+		properties.setProperty(ProducerConfig.RETRIES_CONFIG, Integer.toString(Integer.MAX_VALUE));
+		
     	// Create the producer
     	KafkaProducer<String, String> producer = new KafkaProducer<>(properties);
     	
