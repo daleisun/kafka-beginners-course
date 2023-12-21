@@ -120,12 +120,17 @@ public class OpenSearchConsumer {
 
                     // send the record into opensearch
 
-                    IndexRequest indexRequest = new IndexRequest("wikimedia")
-                            .source(record.value(), XContentType.JSON);
+                    try {
 
-                    IndexResponse response = openSearchClient.index(indexRequest, RequestOptions.DEFAULT);
+                        IndexRequest indexRequest = new IndexRequest("wikimedia")
+                                .source(record.value(), XContentType.JSON);
 
-                    LOG.info("Inserted 1 document into OpenSearch, response id " + response.getId());
+                        IndexResponse response = openSearchClient.index(indexRequest, RequestOptions.DEFAULT);
+
+                        LOG.info("Inserted 1 document into OpenSearch, response id " + response.getId());
+                    } catch (Exception e ) {
+                        LOG.error("One message error");
+                    }
                 }
             }
         }
