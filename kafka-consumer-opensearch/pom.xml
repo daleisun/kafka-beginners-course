@@ -42,7 +42,7 @@
   </dependencies>
 
   <build>
-    <finalName>kafka-producer-wikimedia</finalName>
+    <finalName>kafka-consumer-opensearch</finalName>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
