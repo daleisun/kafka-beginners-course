@@ -95,13 +95,13 @@ public class OpenSearchConsumer {
         // we need to create the index on openSearch if it doesn't exist already
         try (openSearchClient; consumer) {
 
-            GetIndexRequest getIndexRequest = new GetIndexRequest("wikimedia");
+            GetIndexRequest getIndexRequest = new GetIndexRequest("wikimedia_new");
             boolean indexExists = openSearchClient.indices().exists(getIndexRequest, RequestOptions.DEFAULT);
 
             if (indexExists) {
                 LOG.info("The wikimedia Index already exists!");
             } else {
-                CreateIndexRequest createIndexRequest = new CreateIndexRequest("wikimedia");
+                CreateIndexRequest createIndexRequest = new CreateIndexRequest("wikimedia_new");
                 openSearchClient.indices().create(createIndexRequest, RequestOptions.DEFAULT);
                 LOG.info("The Wikimedia Index has been created!");
             }
@@ -127,6 +127,7 @@ public class OpenSearchConsumer {
 
                         LOG.info("Inserted 1 document into OpenSearch, response id " + response.getId());
                     } catch (Exception e ) {
+
                         LOG.error("One message error", e);
                         LOG.error(record.value());
                     }
