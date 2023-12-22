@@ -127,7 +127,7 @@ public class OpenSearchConsumer {
 
                         LOG.info("Inserted 1 document into OpenSearch, response id " + response.getId());
                     } catch (Exception e ) {
-                        LOG.error("One message error");
+                        LOG.error("One message error", e);
                         LOG.error(record.value());
                     }
                 }
