@@ -119,17 +119,16 @@ public class OpenSearchConsumer {
                 for (ConsumerRecord<String, String> record : records) {
 
                     // send the record into opensearch
+                    IndexRequest indexRequest = new IndexRequest("wikimedia").source(record.value(), XContentType.JSON);
 
                     try {
-
-                        IndexRequest indexRequest = new IndexRequest("wikimedia")
-                                .source(record.value(), XContentType.JSON);
 
                         IndexResponse response = openSearchClient.index(indexRequest, RequestOptions.DEFAULT);
 
                         LOG.info("Inserted 1 document into OpenSearch, response id " + response.getId());
                     } catch (Exception e ) {
                         LOG.error("One message error");
+                        LOG.error(record.value());
                     }
                 }
             }
