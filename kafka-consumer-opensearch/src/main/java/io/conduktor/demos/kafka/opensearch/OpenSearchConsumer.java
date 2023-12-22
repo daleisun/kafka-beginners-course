@@ -119,7 +119,7 @@ public class OpenSearchConsumer {
                 for (ConsumerRecord<String, String> record : records) {
 
                     // send the record into opensearch
-                    IndexRequest indexRequest = new IndexRequest("wikimedia").source(record.value(), XContentType.JSON);
+                    IndexRequest indexRequest = new IndexRequest("wikimedia_new").source(record.value(), XContentType.JSON);
 
                     try {
 

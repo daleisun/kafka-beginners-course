@@ -55,7 +55,7 @@ public class WikimediaChangesProducer {
 
 		// Produce for 10 minutes and block the program until then
 		try {
-			TimeUnit.MINUTES.sleep(5);
+			TimeUnit.MINUTES.sleep(3);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
