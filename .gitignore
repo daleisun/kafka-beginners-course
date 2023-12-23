@@ -9,3 +9,4 @@ target/
 .factorypath
 *.log
 *.gz
+dependency-reduced-pom.xml
