@@ -27,6 +27,9 @@ import org.opensearch.common.xcontent.XContentType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 public class OpenSearchConsumer {
 
     private static final Logger LOG = LoggerFactory.getLogger(OpenSearchConsumer.class.getSimpleName());
@@ -66,7 +69,7 @@ public class OpenSearchConsumer {
         return restHighLevelClient;
     }
 
-    public static KafkaConsumer<String, String> createKafkaConsumer() {
+    private static KafkaConsumer<String, String> createKafkaConsumer() {
 
         String bootstrapServers = "127.0.0.1:9092";
         String groupId = "consumer-opensearch-demo";
@@ -82,6 +85,13 @@ public class OpenSearchConsumer {
 
         // Create a consumer
         return new KafkaConsumer<>(properties);
+    }
+
+    private static String extractId(String json) {
+
+        JsonObject record = JsonParser.parseString(json).getAsJsonObject();
+        JsonObject recordMeta = record.get("meta").getAsJsonObject();
+        return recordMeta.get("id").getAsString();
     }
 
     public static void main(String[] args) throws IOException {
@@ -119,14 +129,24 @@ public class OpenSearchConsumer {
                 for (ConsumerRecord<String, String> record : records) {
 
                     // send the record into opensearch
-                    IndexRequest indexRequest = new IndexRequest("wikimedia_new").source(record.value(), XContentType.JSON);
+
+                    // strategy 1
+                    // define an ID using Kafka Record coordinates
+                    // String id = record.topic() + "_" + record.partition() + "_" + record.offset();
+
+                    // strategy 2
+                    // extract id from record itself
+                    String id = extractId(record.value());
+                    IndexRequest indexRequest = new IndexRequest("wikimedia_new")
+                            .source(record.value(), XContentType.JSON)
+                            .id(id);
 
                     try {
 
                         IndexResponse response = openSearchClient.index(indexRequest, RequestOptions.DEFAULT);
 
                         LOG.info("Inserted 1 document into OpenSearch, response id " + response.getId());
-                    } catch (Exception e ) {
+                    } catch (Exception e) {
 
                         LOG.error("One message error", e);
                         LOG.error(record.value());
