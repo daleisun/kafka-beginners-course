@@ -36,15 +36,17 @@ public class ConsumerDemo {
         consumer.subscribe(List.of(topic));
 
         // Poll for data
-        while (true) {
-            LOG.info("Polling");
+        try (consumer) {
+            while (true) {
+                LOG.info("Polling");
 
-            ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(1000));
+                ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(1000));
 
-            records.forEach(record -> {
-                LOG.info("Key: " + record.key() + ", Value: " + record.value());
-                LOG.info("Partition: " + record.partition() + ", Offset: " + record.offset());
-            });
+                records.forEach(record -> {
+                    LOG.info("Key: " + record.key() + ", Value: " + record.value());
+                    LOG.info("Partition: " + record.partition() + ", Offset: " + record.offset());
+                });
+            }
         }
     }
 }
