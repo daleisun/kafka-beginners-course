@@ -145,20 +145,20 @@ public class OpenSearchConsumer {
 
                     try {
 
-                        IndexResponse response = openSearchClient.index(indexRequest, RequestOptions.DEFAULT);
+                        openSearchClient.index(indexRequest, RequestOptions.DEFAULT);
 
-                        LOG.info("Inserted 1 document into OpenSearch, response id " + response.getId());
+                        // LOG.info("Inserted 1 document into OpenSearch, response id " + response.getId());
                     } catch (Exception e) {
 
                         LOG.error("One message error", e);
                         LOG.error(record.value());
                     }
                 }
+
+                // commit offsets after the batch is consumed
+                consumer.commitSync();
+                LOG.info("Offsets have been committed");
             }
         }
-
-        // main code logic
-
-        // close things
     }
 }
