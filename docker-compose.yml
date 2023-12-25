@@ -22,6 +22,7 @@ services:
       - KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR=3
       - CLUSTER_ID=ciWo7IWazngRchmPES6q5A==
       - KAFKA_LOG_DIRS=/tmp/kraft-combined-logs
+    restart: on-failure
 
   kafka-broker2:
     image: confluentinc/cp-kafka
@@ -43,6 +44,7 @@ services:
       - KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR=3
       - CLUSTER_ID=ciWo7IWazngRchmPES6q5A==
       - KAFKA_LOG_DIRS=/tmp/kraft-combined-logs
+    restart: on-failure
 
   kafka-broker3:
     image: confluentinc/cp-kafka
@@ -64,6 +66,7 @@ services:
       - KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR=3
       - CLUSTER_ID=ciWo7IWazngRchmPES6q5A==
       - KAFKA_LOG_DIRS=/tmp/kraft-combined-logs
+    restart: on-failure
 
   kafka-ui:
     container_name: kafka-ui
@@ -78,3 +81,4 @@ services:
       - DYNAMIC_CONFIG_ENABLED=true
       - KAFKA_CLUSTERS_0_NAME=mycluster
       - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka1:29092,kafka2:29092,kafka3:29092
+    restart: on-failure
