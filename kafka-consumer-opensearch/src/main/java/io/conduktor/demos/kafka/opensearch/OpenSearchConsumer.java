@@ -39,8 +39,8 @@ public class OpenSearchConsumer {
 
     public static RestHighLevelClient createOpenSearchClient() {
 
-        // String connectString = "http://localhost:9200";
-        String connectString = "https://evgcv88vjl:enr5uofx84@myopensearch-5551407621.us-east-1.bonsaisearch.net:443";
+        String connectString = "http://localhost:9200";
+        // String connectString = "https://evgcv88vjl:enr5uofx84@myopensearch-5551407621.us-east-1.bonsaisearch.net:443";
 
         // we build a URI from the connection string
         RestHighLevelClient restHighLevelClient;
